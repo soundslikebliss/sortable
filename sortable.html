@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>sortable demo</title>
+</head>
+<body>
+
+	<style type="text/css">
+		li {
+			background-color: lightblue;
+			padding: 1em 2em;
+			width: 200px;
+			list-style-type: none;
+			margin: 1em;
+		}
+	</style>
+
+	<ul id="items">
+		<li>Singles</li>
+		<li>Blends</li>
+		<li>Starter Kits</li>
+		<li>Personal Care</li>
+		<li>Healthy & Fit</li>
+	</ul>
+
+	<div>
+		<ul id="results"></ul>
+	</div>
+
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.6.0/Sortable.js"></script>
+
+	<script type="text/javascript">
+
+		var categories;
+		var results = document.querySelector('#results');
+
+
+
+		var el = document.querySelector('#items');
+		var sortable = Sortable.create(el, {
+
+			onEnd: function (/**Event*/evt) {
+				var itemEl = evt.item;  // dragged HTMLElement
+				evt.to;    // target list
+				evt.from;  // previous list
+				evt.oldIndex;  // element's old index within old parent
+				evt.newIndex;  // element's new index within new parent
+
+
+				// this is a node list
+				categories = evt.to.querySelectorAll("li");
+
+				// convert to proper array
+				categories = Array.prototype.slice.call(categories);
+				console.log('before drag', categories);
+
+				var catContent = [];
+
+				categories.forEach(function(i){
+					catContent.push(i.innerText);	
+				});
+				console.log('after drop', catContent);
+
+				results.innerHTML = catContent;
+
+			}
+
+		});
+
+
+
+
+	</script>
+
+</body>
+</html>
